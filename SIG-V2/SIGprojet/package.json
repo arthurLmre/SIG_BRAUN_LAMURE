@@ -1,0 +1,27 @@
+{
+  "name": "sigprojet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PokecardIUT/SIGprojet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PokecardIUT/SIGprojet/issues"
+  },
+  "homepage": "https://github.com/PokecardIUT/SIGprojet#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "sqlite3": "^4.0.4",
+    "tokml": "^0.4.0",
+    "write-file": "^1.0.0",
+    "node-dijkstra": "^2.5.0",
+    "gtran-kml": "^1.2.2"
+  }
+}
