@@ -2,8 +2,8 @@ const Graph = require("node-dijkstra");
 const createTableAdj = require("../utils/create-table-adj.js");
 const getAllPoint = require("../utils/getAllPoints.js");
 var write = require("write-file");
-var algoDij = require("../utilse/algoDijkstra");
-var formatXML = require("../utils/indentXml")
+var algoDij = require("../utils/algoDijkstra");
+var formatXML = require("../utils/indentXml");
 
 
 var sqlite3 = require("sqlite3").verbose();

@@ -4,7 +4,7 @@ let html = `<!DOCTYPE html>
 <head>
   <title>SIG</title>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="https://bootswatch.com/4/sketchy/bootstrap.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://bootswatch.com/4/sketchy/bootstrap.min.css" crossorigin="anonymous"  type="text/css"/>
   <style>/* PrismJS 1.15.0
   https://prismjs.com/download.html#themes=prism-okaidia&languages=markup */
   /**
@@ -15,10 +15,7 @@ let html = `<!DOCTYPE html>
   
   code[class*="language-"],
   pre[class*="language-"] {
-    color: #f8f8f2;
-    background: none;
-    text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    color: #0d0d0b;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -39,14 +36,24 @@ let html = `<!DOCTYPE html>
   /* Code blocks */
   pre[class*="language-"] {
     padding: 1em;
-    margin: .5em 0;
+    margin: 2.5em 0;
     overflow: auto;
-    border-radius: 0.3em;
+    border-radius: 2.5em;
+  }
+  
+  .jumbotron, .btn {
+       border-radius: 2.5em !important;
+       background-color: #FF9D83;
+       border: white;
+       -webkit-box-shadow: 0px 5px 16px 1px rgba(0,0,0,0.5);
+              font-family: Arial,serif;
+       text-align: center;
   }
   
   :not(pre) > code[class*="language-"],
   pre[class*="language-"] {
-    background: #272822;
+   background-color: #FF9D83;
+   border: white;
   }
   
   /* Inline code */
@@ -122,48 +129,60 @@ let html = `<!DOCTYPE html>
   .token.bold {
     font-weight: bold;
   }
-  .token.italic {
-    font-style: italic;
-  }
   
   .token.entity {
     cursor: help;
   }
   
+  select{
+       background-color: #C2FFDC;
+       font-family: Arial,serif;
+  }
+  body > * {
+    font-family: Arial,serif;
+  }
+  #kmlZoneTexte{
+    height: 0;
+    overflow: hidden;
+    padding: 0px !important;
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.5);
+
+  }
+  
   </style>
 </head>
 
-<body>
+<body style="padding: 16px">
   <div class="jumbotron" style="margin-top: 5vh;">
-    <fieldset>
-      <legend>Parcours en largeur</legend>
-      <label for="startL">Début: </label>
-      <select name="startL" id="startL"></select>
-      <label for="endL">Fin: </label>
-      <select name="endL" id="endL"></select>
-      <input id="btnParcours" class="btn btn-outline-secondary" type="button" value="Télécharger" />
-    </fieldset>
-    <br>
-    <fieldset>
-      <legend>Dijkstra</legend>
-      <label for="startD">Début: </label>
-      <select name="startD" id="startD"></select>
-      <label for="endD">Fin: </label>
-      <select name="endD" id="endD"></select>
-      <input id="btnDijkstra" class="btn btn-outline-secondary" type="button" value="Télécharger" />
-    </fieldset>
-    <br>
-    <fieldset>
-      <legend>Lignes de bus optimisées</legend>
-      <p> Ce fichier représente les plus cours chemins possible du début à la fin de chaque ligne (y compris tout les arcs) </p>
-      <input id="btnAllBus" class="btn btn-outline-secondary" type="button" value="Télécharger" />
-    </fieldset>
-    <br>
-    <fieldset>
-      <legend>Lignes de bus</legend>
-      <p> Ce fichier représente les plus cours chemins possible du début à la fin de chaque ligne (les arcs qui correspondent aux lignes de bus) </p>
-      <input id="btnAllBusWithArcLigne" class="btn btn-outline-secondary" type="button" value="Télécharger" />
-    </fieldset>
+        <div class="row">
+             <div class="col-6">
+               <fieldset>
+                  <legend>Parcours en largeur</legend>
+                  <label for="startL">Début: </label>
+                  <select name="startL" id="startL"></select>
+                  <br>
+                  <label for="endL">Fin: </label>
+                  <select name="endL" id="endL"></select>
+                  <br>
+                  <input id="btnParcours" class="btn btn-outline-secondary" type="button" value="Télécharger" />
+                </fieldset>
+            </div>
+             <div class="col-6">
+                 <fieldset>
+                      <legend>Dijkstra</legend>
+                      <label for="startD">Début: </label>
+                      <select name="startD" id="startD"></select>
+                      <br>
+                      <label for="endD">Fin: </label>
+                      <select name="endD" id="endD"></select>
+                      <br>
+                      <input id="btnDijkstra" class="btn btn-outline-secondary" type="button" value="Télécharger" />
+                  </fieldset>
+            </div>
+        </div>
+  </div>
+  
+  <div class="jumbotron" id="kmlZoneTexte" style="margin-top: 5vh;">
     <pre class="language-markup"><code id="kml" class="language-markup"></code></pre>
   </div>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -199,6 +218,9 @@ let html = `<!DOCTYPE html>
         success: function (data) {
           var a = document.createElement("a");
           a.setAttribute("id", "downloadDijkstra");
+           var zoneTexte = $("#kmlZoneTexte")
+          zoneTexte.css("height", "auto")
+          zoneTexte.css("overflow", "visible")
           document.body.appendChild(a);
           a.style = "display: none";
           var kml = new XMLSerializer().serializeToString(data);
@@ -287,6 +309,10 @@ let html = `<!DOCTYPE html>
         dataType: "xml",
         success: function (data) {
           var a = document.createElement("a");
+          var zoneTexte = $("#kmlZoneTexte")
+          zoneTexte.css("height", "auto")
+          zoneTexte.css("overflow", "visible")
+          zoneTexte.css("-webkit-box-shadow", "0px 5px 16px 1px rgba(0,0,0,0.5)")
           a.setAttribute("id", "downloadParcours");
           document.body.appendChild(a);
           a.style = "display: none";
